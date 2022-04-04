@@ -1,2 +1,2 @@
 # Amazon Product Analysis
-Team Project for Stat 380 Classes.
+Link to Kaggle Dataset: https://www.kaggle.com/datasets/nguyenngocphung/10000-amazon-products-dataset
