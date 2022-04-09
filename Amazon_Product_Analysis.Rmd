@@ -1,0 +1,60 @@
+---
+title: "Amazon Product Analysis"
+output: html_notebook
+---
+
+#Importing Data
+```{r}
+View(Amazon_Products)
+```
+
+#Cleaning Data
+```{r}
+colnames(Amazon_Products)
+str(Amazon_Products)
+```
+
+#Removes 800+ empty columns - filters down to 14
+```{r}
+Amazon_Products_Cleaned <- subset(Amazon_Products, select = c(uniq_id, product_name, manufacturer, price, number_available_in_stock, number_of_reviews, number_of_answered_questions, average_review_rating, amazon_category_and_sub_category, description, product_information, product_description, items_customers_buy_after_viewing_this_item, customer_questions_and_answers))
+```
+
+```{r}
+View(Amazon_Products_Cleaned)
+```
+
+#Writes Dataset as CSV for export
+```{r}
+write.csv(Amazon_Products_Cleaned,'Amazon_Products_Cleaned.csv')
+```
+
+#Convert Price from Pound to Dollar
+#Current exchange rate is 1 Pound : 1.30 USD as of 4/9/2022
+
+```{r}
+summary(Amazon_Products_Cleaned)
+```
+
+#Price is currently character, need to remove the pound symbol and convert to float type
+```{r}
+Amazon_Products_Cleaned$price<-gsub("£","",as.character(Amazon_Products_Cleaned$price))
+```
+
+```{r}
+View(Amazon_Products_Cleaned)
+```
+
+```{r}
+transform(Amazon_Products_Cleaned, price = as.numeric(price))
+Amazon_Products_Cleaned$price <- Amazon_Products_Cleaned$price*1.30
+```
+
+```{r}
+View(Amazon_Products_Cleaned)
+```
+
+
+
+
+
+
