@@ -10,7 +10,7 @@ Amazon_Products <- read.csv('Amazon_Product.csv')
 head(Amazon_Products)
 ```
 
-### Cleaning Data
+## Cleaning Data
 ```{r}
 colnames(Amazon_Products)
 ```
@@ -29,20 +29,11 @@ head(Amazon_Products_Cleaned)
 write.csv(Amazon_Products_Cleaned,'Amazon_Products_Cleaned.csv')
 ```
 
-### Convert Price from Pound to Dollar
+### Convert Price from Pound to Dollar and variable transformation
 
-```{r}
-#Current exchange rate is 1 Pound : 1.30 USD as of 4/9/2022
-summary(Amazon_Products_Cleaned)
-```
-
-### Price is currently character, need to remove the pound symbol and convert to float type
+Price is currently character, need to remove the pound symbol and convert to float type
 ```{r}
 Amazon_Products_Cleaned$price<-gsub("£","",as.character(Amazon_Products_Cleaned$price))
-```
-
-```{r}
-View(Amazon_Products_Cleaned)
 ```
 
 ```{r}
@@ -54,9 +45,15 @@ Amazon_Products_Cleaned <- Amazon_Products_Cleaned %>%
 Amazon_Products_Cleaned$price <- Amazon_Products_Cleaned$price*1.30
 ```
 
+### Convert review rating to number
+
 ```{r}
-head(Amazon_Products_Cleaned)
+Amazon_Products_Cleaned$average_review_rating <- substr(Amazon_Products_Cleaned$average_review_rating,1,3)
+Amazon_Products_Cleaned <- Amazon_Products_Cleaned %>%
+  mutate(average_review_rating = as.numeric(average_review_rating))
+  
 ```
+
 
 # Initial Statistics/Plots
 ## Statistics
@@ -67,6 +64,7 @@ Amazon_Products_Cleaned %>%
             mean_price = mean(price, na.rm=T),
             med_price = median(price, na.rm=T),
             mean_reviews = mean(number_of_reviews, na.rm=T),
+            mean_rating = mean(average_review_rating, na.rm=T)
             )
 ```
 
@@ -86,3 +84,8 @@ Amazon_Products_Cleaned %>%
   geom_boxplot() +
   ylim(0,25)
 ```
+
+```{r}
+
+```
+
