@@ -85,7 +85,27 @@ Amazon_Products_Cleaned %>%
   ylim(0,25)
 ```
 
-```{r}
 
+
+
+
+# Clustering
+### Looking for groups
+
+```{r}
+# pairs can only look at numeric variables
+Amazon_Products_Cleaned_numeric <- Amazon_Products_Cleaned %>%
+  select(price, number_of_reviews, number_of_answered_questions, average_review_rating)
+pairs(Amazon_Products_Cleaned_numeric)
 ```
+
+# Linear Regression
+
+```{r}
+model1 <- lm(price ~ ., data = Amazon_Products_Cleaned_numeric)
+summary(model1)
+```
+
+
+
 
